@@ -67,12 +67,13 @@
                             Editar
                             </button>
                             <form method="post" 
-
                                 class="delete-form" 
-
+                                data-object-name="{% block model_name_singular %}{% endblock %}" 
                                 {% csrf_token %}
                                 <input type="hidden" name="id" value="{{ object.id }}">
-                                <button type="submit" class="btn btn-danger btn-sm delete-btn">
+                                <button type="submit" class="btn btn-danger btn-sm delete-btn"
+                                    data-delete-url="{% block delete_url_pattern %}{% endblock %}" 
+                                    data-object-id="{{ object.id }}"> 
                                     Eliminar
                                 </button>
                             </form>

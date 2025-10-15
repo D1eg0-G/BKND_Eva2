@@ -10,7 +10,10 @@
 {% block edit_url_pattern %}{% url 'consultamedica_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'consultamedica_delete' 0 %}{% endblock %}
 
+{% block model_name_edit %}Consulta Médica{% endblock %} 
+{% block model_name_api %}consultas{% endblock %} 
 {% block filters %}
+
 <div class="filter-group">
     <label for="id_paciente">Paciente:</label>
     <select name="paciente" id="id_paciente" class="form-control">
