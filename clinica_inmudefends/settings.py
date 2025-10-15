@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
 ]
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Inmudefends API',
@@ -59,7 +56,9 @@ SPECTACULAR_SETTINGS = {
 import os
 from pathlib import Path
 # DRF Configuration
+# DRF Configuration
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # <-- ¡Agregado!
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
