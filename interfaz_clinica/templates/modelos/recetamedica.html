@@ -1,0 +1,124 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Recetas Médicas - Inmudefends{% endblock %}
+
+{% block model_title %}Recetas Médicas{% endblock %}
+{% block model_name %}Receta Médica{% endblock %}
+
+{% block model_name_edit %}Receta Médica{% endblock %}
+
+{% block model_name_api %}recetasmedicas{% endblock %}
+
+{% block create_url %}{% url 'recetamedica_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'recetamedica_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'recetamedica_delete' 0 %}{% endblock %}
+
+
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_tratamiento">Tratamiento:</label>
+    <select name="tratamiento" id="id_tratamiento" class="form-control">
+        <option value="">Todos los tratamientos</option>
+        {% for trat in tratamientos %}
+        <option value="{{ trat.id }}" {% if filter.form.tratamiento.value == trat.id %}selected{% endif %}>Tratamiento {{ trat.id }} - {{ trat.consulta.paciente.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="filter-group">
+    <label for="id_medicamento">Medicamento:</label>
+    <select name="medicamento" id="id_medicamento" class="form-control">
+        <option value="">Todos los medicamentos</option>
+        {% for med in medicamentos %}
+        <option value="{{ med.id }}" {% if filter.form.medicamento.value == med.id %}selected{% endif %}>{{ med.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_tratamiento">Tratamiento:</label>
+    <select name="tratamiento" id="id_tratamiento" required class="form-control">
+        <option value="">Seleccione tratamiento</option>
+        {% for trat in tratamientos %}
+        <option value="{{ trat.id }}">Tratamiento {{ trat.id }} - {{ trat.consulta.paciente.nombre }} {{ trat.consulta.paciente.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_medicamento">Medicamento:</label>
+    <select name="medicamento" id="id_medicamento" required class="form-control">
+        <option value="">Seleccione medicamento</option>
+        {% for med in medicamentos %}
+        <option value="{{ med.id }}">{{ med.nombre }} - {{ med.laboratorio }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_dosis">Dosis:</label>
+    <input type="text" name="dosis" id="id_dosis" required class="form-control" placeholder="Ej: 500mg, 1 tableta">
+</div>
+<div class="form-group">
+    <label for="id_frecuencia">Frecuencia:</label>
+    <input type="text" name="frecuencia" id="id_frecuencia" required class="form-control" placeholder="Ej: Cada 8 horas, 3 veces al día">
+</div>
+<div class="form-group">
+    <label for="id_duracion">Duración:</label>
+    <input type="text" name="duracion" id="id_duracion" required class="form-control" placeholder="Ej: 7 días, Hasta finalizar tratamiento">
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_tratamiento">Tratamiento:</label>
+    <select name="tratamiento" id="edit_tratamiento" required class="form-control">
+        <option value="">Seleccione tratamiento</option>
+        {% for trat in tratamientos %}
+        <option value="{{ trat.id }}">Tratamiento {{ trat.id }} - {{ trat.consulta.paciente.nombre }} {{ trat.consulta.paciente.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_medicamento">Medicamento:</label>
+    <select name="medicamento" id="edit_medicamento" required class="form-control">
+        <option value="">Seleccione medicamento</option>
+        {% for med in medicamentos %}
+        <option value="{{ med.id }}">{{ med.nombre }} - {{ med.laboratorio }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_dosis">Dosis:</label>
+    <input type="text" name="dosis" id="edit_dosis" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_frecuencia">Frecuencia:</label>
+    <input type="text" name="frecuencia" id="edit_frecuencia" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_duracion">Duración:</label>
+    <input type="text" name="duracion" id="edit_duracion" required class="form-control">
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Tratamiento</th>
+<th>Paciente</th>
+<th>Medicamento</th>
+<th>Dosis</th>
+<th>Frecuencia</th>
+<th>Duración</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>Tratamiento {{ object.tratamiento.id }}</td>
+<td>{{ object.tratamiento.consulta.paciente.nombre }} {{ object.tratamiento.consulta.paciente.apellido }}</td>
+<td>{{ object.medicamento.nombre }}</td>
+<td>{{ object.dosis }}</td>
+<td>{{ object.frecuencia }}</td>
+<td>{{ object.duracion }}</td>
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Médicos - Inmudefends{% endblock %}
+
+{% block model_title %}Médicos{% endblock %}
+{% block model_name %}Médico{% endblock %}
+
+{% block create_url %}{% url 'medico_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'medico_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'medico_delete' 0 %}{% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_rut">RUT:</label>
+    <input type="text" name="rut" id="id_rut" value="{{ filter.form.rut.value|default:'' }}" placeholder="Buscar por RUT...">
+</div>
+<div class="filter-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" value="{{ filter.form.nombre.value|default:'' }}" placeholder="Buscar por nombre...">
+</div>
+<div class="filter-group">
+    <label for="id_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="id_apellido" value="{{ filter.form.apellido.value|default:'' }}" placeholder="Buscar por apellido...">
+</div>
+<div class="filter-group">
+    <label for="id_especialidad">Especialidad:</label>
+    <select name="especialidad" id="id_especialidad" class="form-control">
+        <option value="">Todas las especialidades</option>
+        {% for esp in especialidades %}
+        <option value="{{ esp.id }}" {% if filter.form.especialidad.value == esp.id %}selected{% endif %}>{{ esp.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="filter-group">
+    <label for="id_tipo_medico">Tipo Médico:</label>
+    <select name="tipo_medico" id="id_tipo_medico" class="form-control">
+        <option value="">Todos</option>
+        <option value="PLANTA" {% if filter.form.tipo_medico.value == 'PLANTA' %}selected{% endif %}>Planta</option>
+        <option value="CONSULTOR" {% if filter.form.tipo_medico.value == 'CONSULTOR' %}selected{% endif %}>Consultor</option>
+        <option value="RESIDENTE" {% if filter.form.tipo_medico.value == 'RESIDENTE' %}selected{% endif %}>Residente</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" required class="form-control" placeholder="Nombre del médico">
+</div>
+<div class="form-group">
+    <label for="id_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="id_apellido" required class="form-control" placeholder="Apellido del médico">
+</div>
+<div class="form-group">
+    <label for="id_rut">RUT:</label>
+    <input type="text" name="rut" id="id_rut" required class="form-control" placeholder="12.345.678-9">
+</div>
+<div class="form-group">
+    <label for="id_correo">Correo:</label>
+    <input type="email" name="correo" id="id_correo" required class="form-control" placeholder="correo@ejemplo.com">
+</div>
+<div class="form-group">
+    <label for="id_telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="id_telefono" required class="form-control" placeholder="+56 9 1234 5678">
+</div>
+<div class="form-group">
+    <label for="id_especialidad">Especialidad:</label>
+    <select name="especialidad" id="id_especialidad" required class="form-control">
+        <option value="">Seleccione especialidad</option>
+        {% for esp in especialidades %}
+        <option value="{{ esp.id }}">{{ esp.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_tipo_medico">Tipo Médico:</label>
+    <select name="tipo_medico" id="id_tipo_medico" required class="form-control">
+        <option value="">Seleccione tipo</option>
+        <option value="PLANTA">Médico de planta</option>
+        <option value="CONSULTOR">Consultor externo</option>
+        <option value="RESIDENTE">Residente</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_activo">Activo:</label>
+    <input type="checkbox" name="activo" id="id_activo" checked class="form-control">
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="edit_nombre" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="edit_apellido" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_rut">RUT:</label>
+    <input type="text" name="rut" id="edit_rut" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_correo">Correo:</label>
+    <input type="email" name="correo" id="edit_correo" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="edit_telefono" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_especialidad">Especialidad:</label>
+    <select name="especialidad" id="edit_especialidad" required class="form-control">
+        <option value="">Seleccione especialidad</option>
+        {% for esp in especialidades %}
+        <option value="{{ esp.id }}">{{ esp.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_tipo_medico">Tipo Médico:</label>
+    <select name="tipo_medico" id="edit_tipo_medico" required class="form-control">
+        <option value="">Seleccione tipo</option>
+        <option value="PLANTA">Médico de planta</option>
+        <option value="CONSULTOR">Consultor externo</option>
+        <option value="RESIDENTE">Residente</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_activo">Activo:</label>
+    <input type="checkbox" name="activo" id="edit_activo" class="form-control">
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>RUT</th>
+<th>Nombre</th>
+<th>Apellido</th>
+<th>Correo</th>
+<th>Teléfono</th>
+<th>Especialidad</th>
+<th>Tipo Médico</th>
+<th>Activo</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.rut }}</td>
+<td>{{ object.nombre }}</td>
+<td>{{ object.apellido }}</td>
+<td>{{ object.correo }}</td>
+<td>{{ object.telefono }}</td>
+<td>{{ object.especialidad.nombre }}</td>
+<td>{{ object.get_tipo_medico_display }}</td>
+<td>
+    {% if object.activo %}
+        <span class="badge badge-success">Sí</span>
+    {% else %}
+        <span class="badge badge-danger">No</span>
+    {% endif %}
+</td>
+{% endblock %}

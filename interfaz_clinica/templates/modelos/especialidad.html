@@ -1,0 +1,53 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Especialidades - Inmudefends{% endblock %}
+
+{% block model_title %}Especialidades Médicas{% endblock %}
+{% block model_name %}Especialidad{% endblock %}
+
+{% block create_url %}{% url 'especialidad_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'especialidad_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'especialidad_delete' 0 %}
+{% block model_name_api %}especialidades{% endblock %} {% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" value="{{ filter.form.nombre.value|default:'' }}" placeholder="Buscar por nombre...">
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" required class="form-control" placeholder="Nombre de la especialidad">
+</div>
+<div class="form-group">
+    <label for="id_descripcion">Descripción:</label>
+    <textarea name="descripcion" id="id_descripcion" class="form-control" placeholder="Descripción de la especialidad" rows="3"></textarea>
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="edit_nombre" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_descripcion">Descripción:</label>
+    <textarea name="descripcion" id="edit_descripcion" class="form-control" rows="3"></textarea>
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Nombre</th>
+<th>Descripción</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.nombre }}</td>
+<td>{{ object.descripcion|default:"-"|truncatewords:10 }}</td>
+{% endblock %}

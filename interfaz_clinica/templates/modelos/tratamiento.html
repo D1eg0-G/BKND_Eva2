@@ -1,0 +1,89 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Tratamientos - Inmudefends{% endblock %}
+
+{% block model_title %}Tratamientos Médicos{% endblock %}
+{% block model_name %}Tratamiento{% endblock %}
+
+{% block create_url %}{% url 'tratamiento_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'tratamiento_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'tratamiento_delete' 0 %}{% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_consulta">Consulta:</label>
+    <select name="consulta" id="id_consulta" class="form-control">
+        <option value="">Todas las consultas</option>
+        {% for cons in consultas %}
+        <option value="{{ cons.id }}" {% if filter.form.consulta.value == cons.id %}selected{% endif %}>Consulta {{ cons.id }} - {{ cons.paciente.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_consulta">Consulta:</label>
+    <select name="consulta" id="id_consulta" required class="form-control">
+        <option value="">Seleccione consulta</option>
+        {% for cons in consultas %}
+        <option value="{{ cons.id }}">Consulta {{ cons.id }} - {{ cons.paciente.nombre }} {{ cons.paciente.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_descripcion">Descripción:</label>
+    <textarea name="descripcion" id="id_descripcion" required class="form-control" placeholder="Descripción del tratamiento" rows="4"></textarea>
+</div>
+<div class="form-group">
+    <label for="id_duracion_dias">Duración (días):</label>
+    <input type="number" name="duracion_dias" id="id_duracion_dias" required class="form-control" min="1" placeholder="Días de tratamiento">
+</div>
+<div class="form-group">
+    <label for="id_observaciones">Observaciones:</label>
+    <textarea name="observaciones" id="id_observaciones" class="form-control" placeholder="Observaciones adicionales" rows="3"></textarea>
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_consulta">Consulta:</label>
+    <select name="consulta" id="edit_consulta" required class="form-control">
+        <option value="">Seleccione consulta</option>
+        {% for cons in consultas %}
+        <option value="{{ cons.id }}">Consulta {{ cons.id }} - {{ cons.paciente.nombre }} {{ cons.paciente.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_descripcion">Descripción:</label>
+    <textarea name="descripcion" id="edit_descripcion" required class="form-control" rows="4"></textarea>
+</div>
+<div class="form-group">
+    <label for="edit_duracion_dias">Duración (días):</label>
+    <input type="number" name="duracion_dias" id="edit_duracion_dias" required class="form-control" min="1">
+</div>
+<div class="form-group">
+    <label for="edit_observaciones">Observaciones:</label>
+    <textarea name="observaciones" id="edit_observaciones" class="form-control" rows="3"></textarea>
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Consulta</th>
+<th>Paciente</th>
+<th>Descripción</th>
+<th>Duración (días)</th>
+<th>Observaciones</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>Consulta {{ object.consulta.id }}</td>
+<td>{{ object.consulta.paciente.nombre }} {{ object.consulta.paciente.apellido }}</td>
+<td>{{ object.descripcion|truncatewords:10 }}</td>
+<td>{{ object.duracion_dias }}</td>
+<td>{{ object.observaciones|default:"-"|truncatewords:5 }}</td>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio - Inmudefends{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h2>Bienvenido a Inmudefends</h2>
+        <p>Clínica especializada en tratamientos médicos avanzados con atención personalizada y profesional.</p>
+    </div>
+</section>
+
+<section class="modules">
+    <h3>Gestión de Datos</h3>
+    <div class="module-grid">
+        <a href="{% url 'tiposangre_list' %}" class="module-card">
+            <h4>Tipos de Sangre</h4>
+            <p>Gestionar tipos sanguíneos</p>
+        </a>
+        <a href="{% url 'especialidad_list' %}" class="module-card">
+            <h4>Especialidades</h4>
+            <p>Gestionar especialidades médicas</p>
+        </a>
+        <a href="{% url 'paciente_list' %}" class="module-card">
+            <h4>Pacientes</h4>
+            <p>Gestionar pacientes</p>
+        </a>
+        <a href="{% url 'medico_list' %}" class="module-card">
+            <h4>Médicos</h4>
+            <p>Gestionar médicos</p>
+        </a>
+        <a href="{% url 'consultamedica_list' %}" class="module-card">
+            <h4>Consultas Médicas</h4>
+            <p>Gestionar consultas</p>
+        </a>
+        <a href="{% url 'recetamedica_list' %}" class="module-card">
+            <h4>Recetas Médicas</h4>
+            <p>Gestionar recetas</p>
+        </a>
+        <a href="{% url 'tratamiento_list' %}" class="module-card">
+            <h4>Tratamientos</h4>
+            <p>Gestionar tratamientos</p>
+        </a>
+        <a href="{% url 'medicamento_list' %}" class="module-card">
+            <h4>Medicamentos</h4>
+            <p>Gestionar medicamentos</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

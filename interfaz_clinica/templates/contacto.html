@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto - Inmudefends{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <h2>Contacto</h2>
+    <p>Estamos aquí para ayudarte. Completa el formulario y nos pondremos en contacto contigo.</p>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" class="contact-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_nombre">Nombre:</label>
+            <input type="text" name="nombre" id="id_nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_asunto">Asunto:</label>
+            <input type="text" name="asunto" id="id_asunto" required>
+        </div>
+        <div class="form-group">
+            <label for="id_mensaje">Mensaje:</label>
+            <textarea name="mensaje" id="id_mensaje" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+    </form>
+</section>
+
+<section class="contact-info">
+    <h3>Información de Contacto</h3>
+    <div class="info-grid">
+        <div class="info-item">
+            <h4>Dirección</h4>
+            <p>Av. Principal #123, Ciudad</p>
+        </div>
+        <div class="info-item">
+            <h4>Teléfono</h4>
+            <p>+1 (555) 123-4567</p>
+        </div>
+        <div class="info-item">
+            <h4>Email</h4>
+            <p>info@inmudefends.com</p>
+        </div>
+        <div class="info-item">
+            <h4>Horario</h4>
+            <p>Lunes a Viernes: 8:00 - 18:00</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

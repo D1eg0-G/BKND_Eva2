@@ -1,0 +1,162 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Consultas Médicas - Inmudefends{% endblock %}
+
+{% block model_title %}Consultas Médicas{% endblock %}
+{% block model_name %}Consulta Médica{% endblock %}
+
+{% block create_url %}{% url 'consultamedica_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'consultamedica_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'consultamedica_delete' 0 %}{% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_paciente">Paciente:</label>
+    <select name="paciente" id="id_paciente" class="form-control">
+        <option value="">Todos los pacientes</option>
+        {% for pac in pacientes %}
+        <option value="{{ pac.id }}" {% if filter.form.paciente.value == pac.id %}selected{% endif %}>{{ pac.nombre }} {{ pac.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="filter-group">
+    <label for="id_medico">Médico:</label>
+    <select name="medico" id="id_medico" class="form-control">
+        <option value="">Todos los médicos</option>
+        {% for med in medicos %}
+        <option value="{{ med.id }}" {% if filter.form.medico.value == med.id %}selected{% endif %}>{{ med.nombre }} {{ med.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="filter-group">
+    <label for="id_estado">Estado:</label>
+    <select name="estado" id="id_estado" class="form-control">
+        <option value="">Todos los estados</option>
+        <option value="PENDIENTE" {% if filter.form.estado.value == 'PENDIENTE' %}selected{% endif %}>Pendiente</option>
+        <option value="EN_PROCESO" {% if filter.form.estado.value == 'EN_PROCESO' %}selected{% endif %}>En Proceso</option>
+        <option value="FINALIZADA" {% if filter.form.estado.value == 'FINALIZADA' %}selected{% endif %}>Finalizada</option>
+        <option value="CANCELADA" {% if filter.form.estado.value == 'CANCELADA' %}selected{% endif %}>Cancelada</option>
+    </select>
+</div>
+<div class="filter-group">
+    <label for="id_fecha_desde">Fecha Desde:</label>
+    <input type="date" name="fecha_desde" id="id_fecha_desde" value="{{ filter.form.fecha_desde.value|default:'' }}" class="form-control">
+</div>
+<div class="filter-group">
+    <label for="id_fecha_hasta">Fecha Hasta:</label>
+    <input type="date" name="fecha_hasta" id="id_fecha_hasta" value="{{ filter.form.fecha_hasta.value|default:'' }}" class="form-control">
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_paciente">Paciente:</label>
+    <select name="paciente" id="id_paciente" required class="form-control">
+        <option value="">Seleccione paciente</option>
+        {% for pac in pacientes %}
+        <option value="{{ pac.id }}">{{ pac.nombre }} {{ pac.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_medico">Médico:</label>
+    <select name="medico" id="id_medico" required class="form-control">
+        <option value="">Seleccione médico</option>
+        {% for med in medicos %}
+        <option value="{{ med.id }}">{{ med.nombre }} {{ med.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_fecha_consulta">Fecha y Hora de Consulta:</label>
+    <input type="datetime-local" name="fecha_consulta" id="id_fecha_consulta" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_motivo">Motivo:</label>
+    <textarea name="motivo" id="id_motivo" required class="form-control" placeholder="Motivo de la consulta" rows="3"></textarea>
+</div>
+<div class="form-group">
+    <label for="id_diagnostico">Diagnóstico:</label>
+    <textarea name="diagnostico" id="id_diagnostico" class="form-control" placeholder="Diagnóstico médico" rows="3"></textarea>
+</div>
+<div class="form-group">
+    <label for="id_estado">Estado:</label>
+    <select name="estado" id="id_estado" required class="form-control">
+        <option value="PENDIENTE">Pendiente</option>
+        <option value="EN_PROCESO">En Proceso</option>
+        <option value="FINALIZADA">Finalizada</option>
+        <option value="CANCELADA">Cancelada</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_paciente">Paciente:</label>
+    <select name="paciente" id="edit_paciente" required class="form-control">
+        <option value="">Seleccione paciente</option>
+        {% for pac in pacientes %}
+        <option value="{{ pac.id }}">{{ pac.nombre }} {{ pac.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_medico">Médico:</label>
+    <select name="medico" id="edit_medico" required class="form-control">
+        <option value="">Seleccione médico</option>
+        {% for med in medicos %}
+        <option value="{{ med.id }}">{{ med.nombre }} {{ med.apellido }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_fecha_consulta">Fecha y Hora de Consulta:</label>
+    <input type="datetime-local" name="fecha_consulta" id="edit_fecha_consulta" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_motivo">Motivo:</label>
+    <textarea name="motivo" id="edit_motivo" required class="form-control" rows="3"></textarea>
+</div>
+<div class="form-group">
+    <label for="edit_diagnostico">Diagnóstico:</label>
+    <textarea name="diagnostico" id="edit_diagnostico" class="form-control" rows="3"></textarea>
+</div>
+<div class="form-group">
+    <label for="edit_estado">Estado:</label>
+    <select name="estado" id="edit_estado" required class="form-control">
+        <option value="PENDIENTE">Pendiente</option>
+        <option value="EN_PROCESO">En Proceso</option>
+        <option value="FINALIZADA">Finalizada</option>
+        <option value="CANCELADA">Cancelada</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Paciente</th>
+<th>Médico</th>
+<th>Fecha Consulta</th>
+<th>Motivo</th>
+<th>Diagnóstico</th>
+<th>Estado</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.paciente.nombre }} {{ object.paciente.apellido }}</td>
+<td>Dr. {{ object.medico.nombre }} {{ object.medico.apellido }}</td>
+<td>{{ object.fecha_consulta|date:"d/m/Y H:i" }}</td>
+<td>{{ object.motivo|truncatewords:10 }}</td>
+<td>{{ object.diagnostico|default:"-"|truncatewords:8 }}</td>
+<td>
+    <span class="badge 
+        {% if object.estado == 'PENDIENTE' %}badge-warning
+        {% elif object.estado == 'EN_PROCESO' %}badge-info
+        {% elif object.estado == 'FINALIZADA' %}badge-success
+        {% else %}badge-danger{% endif %}">
+        {{ object.get_estado_display }}
+    </span>
+</td>
+{% endblock %}

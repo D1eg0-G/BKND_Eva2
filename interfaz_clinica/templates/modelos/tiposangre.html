@@ -1,0 +1,48 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Tipos de Sangre - Inmudefends{% endblock %}
+
+{% block model_title %}Tipos de Sangre{% endblock %}
+{% block model_name %}Tipo de Sangre{% endblock %}
+
+{% block model_name_edit %}Tipo de Sangre{% endblock %}
+
+{% block model_name_api %}tiposangres{% endblock %}
+
+{% block create_url %}{% url 'tiposangre_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'tiposangre_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'tiposangre_delete' 0 %}{% endblock %}
+
+
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_tipo">Tipo:</label>
+    <input type="text" name="tipo" id="id_tipo" value="{{ filter.form.tipo.value|default:'' }}" placeholder="Buscar tipo...">
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_tipo">Tipo de Sangre:</label>
+    <input type="text" name="tipo" id="id_tipo" required maxlength="3" class="form-control" placeholder="Ej: A+, O-">
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_tipo">Tipo de Sangre:</label>
+    <input type="text" name="tipo" id="edit_tipo" required maxlength="3" class="form-control">
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Tipo</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.tipo }}</td>
+{% endblock %}

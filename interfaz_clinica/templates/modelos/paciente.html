@@ -1,0 +1,155 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Pacientes - Inmudefends{% endblock %}
+
+{% block model_title %}Pacientes{% endblock %}
+{% block model_name %}Paciente{% endblock %}
+
+{% block model_name_edit %}Paciente{% endblock %}
+{% block model_name_api %}pacientes{% endblock %}
+
+{% block create_url %}{% url 'paciente_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'paciente_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'paciente_delete' 0 %}{% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_rut">RUT:</label>
+    <input type="text" name="rut" id="id_rut" value="{{ filter.form.rut.value|default:'' }}" placeholder="Buscar por RUT...">
+</div>
+<div class="filter-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" value="{{ filter.form.nombre.value|default:'' }}" placeholder="Buscar por nombre...">
+</div>
+<div class="filter-group">
+    <label for="id_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="id_apellido" value="{{ filter.form.apellido.value|default:'' }}" placeholder="Buscar por apellido...">
+</div>
+<div class="filter-group">
+    <label for="id_activo">Activo:</label>
+    <select name="activo" id="id_activo" class="form-control">
+        <option value="">Todos</option>
+        <option value="True" {% if filter.form.activo.value == 'True' %}selected{% endif %}>Sí</option>
+        <option value="False" {% if filter.form.activo.value == 'False' %}selected{% endif %}>No</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_rut">RUT:</label>
+    <input type="text" name="rut" id="id_rut" required maxlength="12" class="form-control" placeholder="Ej: 11.222.333-K">
+</div>
+<div class="form-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" required maxlength="100" class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="id_apellido" required maxlength="100" class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_fecha_nacimiento">Fecha de Nacimiento:</label>
+    <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_tipo_sangre">Tipo de Sangre:</label>
+    <select name="tipo_sangre" id="id_tipo_sangre" required class="form-control">
+        <option value="">Seleccione</option>
+        {% for tipo in tipos_sangre %}
+        <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="id_correo">Correo:</label>
+    <input type="email" name="correo" id="id_correo" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="id_telefono" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="id_direccion">Dirección:</label>
+    <textarea name="direccion" id="id_direccion" class="form-control" required></textarea>
+</div>
+<div class="form-group">
+    <label for="id_activo">Activo:</label>
+    <input type="checkbox" name="activo" id="id_activo" class="form-control" checked>
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_rut">RUT:</label>
+    <input type="text" name="rut" id="edit_rut" required maxlength="12" class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="edit_nombre" required maxlength="100" class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_apellido">Apellido:</label>
+    <input type="text" name="apellido" id="edit_apellido" required maxlength="100" class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_fecha_nacimiento">Fecha de Nacimiento:</label>
+    <input type="date" name="fecha_nacimiento" id="edit_fecha_nacimiento" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_tipo_sangre">Tipo de Sangre:</label>
+    <select name="tipo_sangre" id="edit_tipo_sangre" required class="form-control">
+        <option value="">Seleccione</option>
+        {% for tipo in tipos_sangre %}
+        <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="edit_correo">Correo:</label>
+    <input type="email" name="correo" id="edit_correo" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="edit_telefono" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_direccion">Dirección:</label>
+    <textarea name="direccion" id="edit_direccion" class="form-control" required></textarea>
+</div>
+<div class="form-group">
+    <label for="edit_activo">Activo:</label>
+    <input type="checkbox" name="activo" id="edit_activo" class="form-control">
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>RUT</th>
+<th>Nombre</th>
+<th>Apellido</th>
+<th>Fecha Nac.</th>
+<th>Tipo Sangre</th>
+<th>Correo</th>
+<th>Teléfono</th>
+<th>Activo</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.rut }}</td>
+<td>{{ object.nombre }}</td>
+<td>{{ object.apellido }}</td>
+<td>{{ object.fecha_nacimiento }}</td>
+<td>{{ object.tipo_sangre.tipo|default:"-" }}</td>
+<td>{{ object.correo }}</td>
+<td>{{ object.telefono }}</td>
+<td>
+    {% if object.activo %}
+        <span class="badge badge-success">Sí</span>
+    {% else %}
+        <span class="badge badge-danger">No</span>
+    {% endif %}
+</td>
+{% endblock %}

@@ -40,10 +40,36 @@ INSTALLED_APPS = [
     # Aplicación de la interfaz clínica
     'interfaz_clinica',
     'rest_framework',
+    'django_filters',
+    'drf_spectacular',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Inmudefends API',
+    'DESCRIPTION': 'Documentación de la API para el sistema de gestión clínica Inmudefends.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,  # Desactivar la inclusión del esquema en la URL del generador
+    # Otras configuraciones...
+}
 
 
-
+import os
+from pathlib import Path
+# DRF Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
+# Django Filters Configuration
+FILTERS_EMPTY_CHOICE_LABEL = 'Todos'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,11 +81,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'clinica_inmudefends.urls'
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'interfaz_clinica', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,9 +116,9 @@ WSGI_APPLICATION = 'clinica_inmudefends.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nombre_de_tu_bd',
-        'USER': 'tu_usuario',
-        'PASSWORD': 'tu_contraseña',
+        'NAME': 'inmudefends_db',
+        'USER': 'admin',
+        'PASSWORD': 'adminpass',
         'HOST': 'localhost',  # o la IP del servidor de la BD
         'PORT': '5432',       # puerto por defecto de PostgreSQL
     }
@@ -133,9 +159,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
+import os
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
-
+# Directorios adicionales para static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'interfaz_clinica', 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

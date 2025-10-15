@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="model-header">
+    <h2>{% block model_title %}Gestión de {% endblock %}</h2>
+    <button class="btn btn-primary" onclick="toggleForm('create')">Agregar Nuevo</button>
+</div>
+
+<div class="filters">
+    <h3>Filtros</h3>
+    <form method="get" class="filter-form">
+        {% block filters %}{% endblock %}
+        <button type="submit" class="btn btn-secondary">Filtrar</button>
+        <a href="?" class="btn btn-secondary">Limpiar filtros</a>
+    </form>
+</div>
+
+<div id="create-form-container" class="form-container" style="display: none;">
+    <h3>Agregar {% block model_name %}{% endblock %}</h3>
+    <form method="post" action="{% block create_url %}{% endblock %}">
+        {% csrf_token %}
+        {% block form_fields %}{% endblock %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleForm('create')">Cancelar</button>
+        </div>
+    </form>
+</div>
+
+<div id="edit-form-container" class="form-container" style="display: none;">
+    <h3>Editar {% block model_name_edit %}{% endblock %}</h3> 
+    <form method="post" id="edit-form">
+        {% csrf_token %}
+        <input type="hidden" name="id" id="edit_id"> 
+        {% block edit_form_fields %}{% endblock %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Actualizar</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleForm('edit')">Cancelar</button>
+        </div>
+    </form>
+</div>
+
+<div class="model-list">
+    <h3>Listado</h3>
+    
+    {% if filter.qs %}
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        {% block table_headers %}{% endblock %}
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in filter.qs %}
+                    <tr>
+                        {% block table_rows %}{% endblock %}
+                        <td class="actions">
+                            <button class="btn btn-warning btn-sm" 
+                                onclick="openEditForm(
+                                    '{% block edit_url_pattern %}{% endblock %}', 
+                                    {{ object.id }},
+                                    '{% block model_name_api %}{% endblock %}' 
+                                )">
+                            Editar
+                            </button>
+                            <form method="post" 
+
+                                class="delete-form" 
+
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ object.id }}">
+                                <button type="submit" class="btn btn-danger btn-sm delete-btn">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="no-data">No hay registros disponibles.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// La función openEditForm ahora debe cargar los datos del API
+// CRÍTICO: Debe recibir los 3 argumentos (urlPattern, objectId, modelName)
+function openEditForm(urlPattern, objectId, modelName) { 
+    const editForm = document.getElementById('edit-form');
+    const editUrl = urlPattern.replace('0', objectId); 
+    
+    // 1. Llenar el campo oculto de ID
+    document.getElementById('edit_id').value = objectId;
+
+    // 2. Establecer la URL de acción del formulario
+    editForm.action = editUrl;
+
+    // 3. CRÍTICO: Llamar a loadEditData con el modelName
+    // Si esta función no existe en forms.js o no se llama, la edición fallará.
+    loadEditData(objectId, modelName); 
+    
+    // 4. Mostrar el formulario
+    toggleForm('edit');
+}
+
+
+// toggleForm se mantiene aquí, pero debe ser universal
+function toggleForm(type) {
+    const createForm = document.getElementById('create-form-container');
+    const editForm = document.getElementById('edit-form-container');
+    
+    if (type === 'create') {
+        createForm.style.display = createForm.style.display === 'none' ? 'block' : 'none';
+        editForm.style.display = 'none';
+        if (createForm.style.display === 'block') {
+            createForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    } else if (type === 'edit') {
+        editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+        createForm.style.display = 'none';
+        if (editForm.style.display === 'block') {
+            editForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+</script>
+{% endblock %}
+<!-- <script>
+// La función openEditForm ahora debe cargar los datos del API
+function openEditForm(urlPattern, objectId, modelName) {
+    const editForm = document.getElementById('edit-form');
+    // Reemplazar el 0 en la URL de patrón con el ID real
+    const editUrl = urlPattern.replace('0', objectId); 
+    
+    // 1. Llenar el campo oculto de ID
+    document.getElementById('edit_id').value = objectId;
+
+    // 2. Establecer la URL de acción del formulario
+    editForm.action = editUrl;
+
+    // 3. Cargar los datos vía API (función definida en forms.js)
+    loadEditData(objectId, modelName); 
+    
+    // 4. Mostrar el formulario (función definida en model_base o forms.js)
+    toggleForm('edit');
+}
+
+// toggleForm se mantiene aquí, pero debe ser universal
+function toggleForm(type) {
+    const createForm = document.getElementById('create-form-container');
+    const editForm = document.getElementById('edit-form-container');
+    
+    if (type === 'create') {
+        createForm.style.display = createForm.style.display === 'none' ? 'block' : 'none';
+        editForm.style.display = 'none';
+    } else if (type === 'edit') {
+        editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+        createForm.style.display = 'none';
+    }
+}
+</script>

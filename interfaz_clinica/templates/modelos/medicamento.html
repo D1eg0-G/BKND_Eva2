@@ -1,0 +1,84 @@
+{% extends 'model_base.html' %}
+{% load static %}
+
+{% block title %}Medicamentos - Inmudefends{% endblock %}
+
+{% block model_title %}Medicamentos{% endblock %}
+{% block model_name %}Medicamento{% endblock %}
+
+{% block create_url %}{% url 'medicamento_create' %}{% endblock %}
+{% block edit_url_pattern %}{% url 'medicamento_update' 0 %}{% endblock %}
+{% block delete_url_pattern %}{% url 'medicamento_delete' 0 %}{% endblock %}
+
+{% block filters %}
+<div class="filter-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" value="{{ filter.form.nombre.value|default:'' }}" placeholder="Buscar por nombre...">
+</div>
+<div class="filter-group">
+    <label for="id_laboratorio">Laboratorio:</label>
+    <input type="text" name="laboratorio" id="id_laboratorio" value="{{ filter.form.laboratorio.value|default:'' }}" placeholder="Buscar por laboratorio...">
+</div>
+<div class="filter-group">
+    <label for="id_stock_min">Stock Mínimo:</label>
+    <input type="number" name="stock_min" id="id_stock_min" value="{{ filter.form.stock_min.value|default:'' }}" placeholder="Stock mínimo" min="0">
+</div>
+{% endblock %}
+
+{% block form_fields %}
+<div class="form-group">
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" required class="form-control" placeholder="Nombre del medicamento">
+</div>
+<div class="form-group">
+    <label for="id_laboratorio">Laboratorio:</label>
+    <input type="text" name="laboratorio" id="id_laboratorio" required class="form-control" placeholder="Laboratorio fabricante">
+</div>
+<div class="form-group">
+    <label for="id_stock">Stock:</label>
+    <input type="number" name="stock" id="id_stock" required class="form-control" min="0" placeholder="Cantidad en stock">
+</div>
+<div class="form-group">
+    <label for="id_precio_unitario">Precio Unitario:</label>
+    <input type="number" name="precio_unitario" id="id_precio_unitario" required class="form-control" min="0" step="0.01" placeholder="Precio por unidad">
+</div>
+{% endblock %}
+
+{% block edit_form_fields %}
+<div class="form-group">
+    <label for="edit_nombre">Nombre:</label>
+    <input type="text" name="nombre" id="edit_nombre" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_laboratorio">Laboratorio:</label>
+    <input type="text" name="laboratorio" id="edit_laboratorio" required class="form-control">
+</div>
+<div class="form-group">
+    <label for="edit_stock">Stock:</label>
+    <input type="number" name="stock" id="edit_stock" required class="form-control" min="0">
+</div>
+<div class="form-group">
+    <label for="edit_precio_unitario">Precio Unitario:</label>
+    <input type="number" name="precio_unitario" id="edit_precio_unitario" required class="form-control" min="0" step="0.01">
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<th>ID</th>
+<th>Nombre</th>
+<th>Laboratorio</th>
+<th>Stock</th>
+<th>Precio Unitario</th>
+{% endblock %}
+
+{% block table_rows %}
+<td>{{ object.id }}</td>
+<td>{{ object.nombre }}</td>
+<td>{{ object.laboratorio }}</td>
+<td>
+    <span class="{% if object.stock < 10 %}badge badge-warning{% endif %}">
+        {{ object.stock }}
+    </span>
+</td>
+<td>${{ object.precio_unitario }}</td>
+{% endblock %}

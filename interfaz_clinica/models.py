@@ -1,7 +1,7 @@
 from django.db import models
 
 # TABLAS AUXILIARES
-
+# tabla extra tipo de sangre
 class TipoSangre(models.Model):
     tipo = models.CharField(max_length=3, unique=True)
 
