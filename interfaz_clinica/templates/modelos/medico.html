@@ -10,6 +10,8 @@
 {% block edit_url_pattern %}{% url 'medico_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'medico_delete' 0 %}{% endblock %}
 
+{% block model_name_singular %}Médico {{ object.nombre }} {{ object.apellido }}{% endblock %}
+
 {% block filters %}
 <div class="filter-group">
     <label for="id_rut">RUT:</label>

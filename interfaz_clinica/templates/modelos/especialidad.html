@@ -9,8 +9,11 @@
 
 {% block create_url %}{% url 'especialidad_create' %}{% endblock %}
 {% block edit_url_pattern %}{% url 'especialidad_update' 0 %}{% endblock %}
-{% block delete_url_pattern %}{% url 'especialidad_delete' 0 %}
-{% block model_name_api %}especialidades{% endblock %} {% endblock %}
+{% block delete_url_pattern %}{% url 'especialidad_delete' 0 %}{% endblock %}
+
+{% block model_name_api %}especialidades{% endblock %} 
+{% block model_name_singular %}Especialidad {{ object.nombre }}{% endblock %}
+
 
 {% block filters %}
 <div class="filter-group">

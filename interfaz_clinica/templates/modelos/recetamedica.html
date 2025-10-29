@@ -13,7 +13,7 @@
 {% block create_url %}{% url 'recetamedica_create' %}{% endblock %}
 {% block edit_url_pattern %}{% url 'recetamedica_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'recetamedica_delete' 0 %}{% endblock %}
-
+{% block model_name_singular %}Receta {{ object.id }} ({{ object.medicamento.nombre }}){% endblock %}
 
 
 {% block filters %}

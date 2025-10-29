@@ -9,7 +9,7 @@
 {% block create_url %}{% url 'tratamiento_create' %}{% endblock %}
 {% block edit_url_pattern %}{% url 'tratamiento_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'tratamiento_delete' 0 %}{% endblock %}
-
+{% block model_name_singular %}Tratamiento {{ object.id }} - {{ object.consulta.paciente.nombre }}{% endblock %}
 {% block filters %}
 <div class="filter-group">
     <label for="id_consulta">Consulta:</label>

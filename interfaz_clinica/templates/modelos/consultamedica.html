@@ -11,7 +11,8 @@
 {% block delete_url_pattern %}{% url 'consultamedica_delete' 0 %}{% endblock %}
 
 {% block model_name_edit %}Consulta Médica{% endblock %} 
-{% block model_name_api %}consultas{% endblock %} 
+{% block model_name_api %}consultasmedicas{% endblock %}
+{% block model_name_singular %}Consulta {{ object.id }} - {{ object.paciente.nombre }}{% endblock %}
 {% block filters %}
 
 <div class="filter-group">

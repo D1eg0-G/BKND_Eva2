@@ -10,7 +10,7 @@
 {% block create_url %}{% url 'medicamento_create' %}{% endblock %}
 {% block edit_url_pattern %}{% url 'medicamento_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'medicamento_delete' 0 %}{% endblock %}
-
+{% block model_name_singular %}Medicamento {{ object.nombre }}{% endblock %}
 {% block filters %}
 <div class="filter-group">
     <label for="id_nombre">Nombre:</label>

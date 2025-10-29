@@ -12,6 +12,7 @@
 {% block create_url %}{% url 'paciente_create' %}{% endblock %}
 {% block edit_url_pattern %}{% url 'paciente_update' 0 %}{% endblock %}
 {% block delete_url_pattern %}{% url 'paciente_delete' 0 %}{% endblock %}
+{% block model_name_singular %}Paciente {{ object.nombre }} {{ object.apellido }}{% endblock %}
 
 {% block filters %}
 <div class="filter-group">

@@ -55,7 +55,7 @@ SPECTACULAR_SETTINGS = {
 
 import os
 from pathlib import Path
-# DRF Configuration
+
 # DRF Configuration
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # <-- ¡Agregado!
