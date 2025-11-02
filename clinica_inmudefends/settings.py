@@ -116,7 +116,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'inmudefends_db',
-        'USER': 'admin',
+        'USER': 'admin_inmu',
         'PASSWORD': 'adminpass',
         'HOST': 'localhost',  # o la IP del servidor de la BD
         'PORT': '5432',       # puerto por defecto de PostgreSQL
